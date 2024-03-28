@@ -1,11 +1,14 @@
-import TodoList from "./_compoenents/todoList";
+import { serverClient } from "./_trpc/serverClient";
 
-export default function Home() {
+import TodoList from "./_compoenents/TodoList";
+
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const todos = await serverClient.getTodos();
   return (
-   <>
-   <div>
-    <TodoList />
-   </div>
-   </>
+    <main className="max-w-3xl mx-auto mt-5">
+      <TodoList initialTodos={todos} />
+    </main>
   );
 }
